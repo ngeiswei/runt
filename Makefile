@@ -1,5 +1,7 @@
 .PHONY: default install clean plugin
 
+PREFIX ?= /usr/local
+
 CFLAGS += -g -Wall -std=c89 -pedantic -I. -fPIC
 
 SPORTH_LIBS = -lsporth -lsoundpipe -lsndfile -lm
@@ -40,12 +42,9 @@ plugin.so: plugin.c
 	$(CC) $(CFLAGS) -c $^ -o $@ 
 
 install: default
-	mkdir -p $(HOME)/.runt/lib
-	mkdir -p $(HOME)/.runt/bin
-	mkdir -p $(HOME)/.runt/include
-	install irunt $(HOME)/.runt/bin
-	install librunt.a $(HOME)/.runt/lib
-	install runt.h $(HOME)/.runt/include
+	install irunt $(PREFIX)/bin
+	install librunt.a $(PREFIX)/lib
+	install runt.h $(PREFIX)/include
 
 clean:
 	rm -rf playground runt.o plugin.so irunt librunt.a 
